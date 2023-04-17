@@ -4,17 +4,19 @@ else
 	GCCFLAGS += -O3 -g3
 endif
 
+COMPILER = clang++
+
 
 all: build
 
 build: no_comparison
 
 no_comparison.o: no_comparison.cpp
-	g++ $(GCCFLAGS) -o $@ -c $< -fopenmp
-	g++ $(GCCFLAGS) -o $@.asm -S -c $< -fopenmp
+	$(COMPILER) $(GCCFLAGS) -o $@ -c $< -fopenmp
+	$(COMPILER) $(GCCFLAGS) -o $@.asm -S -c $< -fopenmp
 
 no_comparison: no_comparison.o
-	g++ $(GCCFLAGS) -o $@ $+ -lgomp
+	$(COMPILER) $(GCCFLAGS) -o $@ $+ -lgomp
 
 clean:
 	rm -f no_comparison.o no_comparison
